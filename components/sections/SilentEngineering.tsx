@@ -49,7 +49,7 @@ export default function SilentEngineering() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(50% 40% at 50% 20%, rgba(0, 60, 200, 0.12) 0%, rgba(0,0,0,0) 65%), radial-gradient(40% 35% at 80% 80%, rgba(255, 255, 255, 0.01) 0%, rgba(0,0,0,0) 60%)',
+            'radial-gradient(50% 40% at 50% 20%, rgba(255, 255, 255, 0.025) 0%, rgba(0,0,0,0) 65%), radial-gradient(40% 35% at 80% 80%, rgba(255, 255, 255, 0.01) 0%, rgba(0,0,0,0) 60%)',
         }}
       />
       <div className="section-divider absolute top-0 inset-x-0" />
@@ -57,15 +57,15 @@ export default function SilentEngineering() {
       <div className="relative mx-auto max-w-[1320px] px-5 md:px-6">
         {/* Header */}
         <div className="text-center mb-16 md:mb-24">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
+            className="flex justify-center mb-6"
           >
-            Ingeniería del silencio
-          </motion.p>
+            <span className="chapter-mark">Capítulo VI · Materia</span>
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +105,7 @@ export default function SilentEngineering() {
                 style={{
                   top: `${22 + i * 14}%`,
                   height: '1px',
-                  background: `linear-gradient(90deg, transparent 0%, rgba(0,80,255,${0.06 + i * 0.03}) 20%, rgba(0,214,255,${0.08 + i * 0.02}) 50%, rgba(0,80,255,${0.06 + i * 0.03}) 80%, transparent 100%)`,
+                  background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,${0.04 + i * 0.02}) 20%, rgba(255,255,255,${0.08 + i * 0.02}) 50%, rgba(255,255,255,${0.04 + i * 0.02}) 80%, transparent 100%)`,
                   opacity: 0.6 + i * 0.08,
                   transform: `scaleY(${1 + i * 0.3})`,
                   filter: `blur(${i * 0.5}px)`,
@@ -123,7 +123,7 @@ export default function SilentEngineering() {
             <div
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] md:w-[320px] md:h-[320px] rounded-full"
               style={{
-                background: 'radial-gradient(circle, rgba(0,80,255,0.12) 0%, rgba(0,214,255,0.04) 40%, rgba(0,0,0,0) 70%)',
+                background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 40%, rgba(0,0,0,0) 70%)',
               }}
             />
           </div>

@@ -59,15 +59,15 @@ export default function Experience() {
 
       <div className="relative mx-auto max-w-[1320px] px-5 md:px-6">
         <div className="text-center mb-16 md:mb-24">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
+            className="flex justify-center mb-6"
           >
-            Experiencia
-          </motion.p>
+            <span className="chapter-mark">Capítulo VIII · Lifestyle</span>
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -163,30 +163,28 @@ export default function Experience() {
         >
           <div className="glass-panel hover-glow rounded-[30px] p-4 md:p-5 transition-transform duration-500 hover:-translate-y-1">
             <div className="grid gap-5 md:grid-cols-[1.05fr_0.95fr] md:items-stretch">
-              <div className="relative min-h-[220px] sm:min-h-[260px] overflow-hidden rounded-[24px] border border-white/[0.06] bg-ink-900">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster="/assets/cascos wh1000 mejora visual.png"
-                  className="absolute inset-0 h-full w-full object-cover opacity-[0.82]"
-                >
-                  <source src="/assets/Introducing%20the%20Sony%20WH-1000XM6%20Wireless%20Noise%20Cancelling%20Headphones.mp4" type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.74)_100%)]" />
+              <div className="relative min-h-[260px] sm:min-h-[320px] overflow-hidden border border-white/[0.06] bg-ink-900">
+                <Image
+                  src="/assets/cascos wh1000 mejora visual.png"
+                  alt="Sony WH-1000XM6"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-center scale-[1.04]"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_50%,transparent_30%,rgba(0,0,0,0.55)_100%)]" />
                 <div className="absolute left-4 right-4 top-4 flex items-start justify-between gap-3">
-                  <span className="glass-panel rounded-full px-3 py-1.5 text-[9px] tracking-[0.24em] uppercase text-white/44">
-                    Film Preview
+                  <span className="text-[9px] tracking-[0.32em] uppercase text-white/55">
+                    Editorial Shot
                   </span>
-                  <span className="glass-panel rounded-full px-3 py-1.5 text-[9px] tracking-[0.24em] uppercase text-white/38">
+                  <span className="text-[9px] tracking-[0.32em] uppercase text-white/35">
                     XM6
                   </span>
                 </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-[10px] tracking-[0.28em] uppercase text-white/40">Movimiento y presencia</p>
-                  <p className="mt-2 max-w-[24rem] text-white/86 text-[18px] md:text-[22px] font-medium tracking-tight leading-snug">
-                    Una pieza pensada para verse premium incluso detenida en un frame.
+                <div className="absolute bottom-5 left-5 right-5">
+                  <p className="text-[10px] tracking-[0.32em] uppercase text-white/45">Cierre</p>
+                  <p className="mt-2 max-w-[24rem] text-white/90 text-[19px] md:text-[24px] font-medium tracking-tight leading-tight font-display">
+                    Pieza definitiva.<br />Foco absoluto.
                   </p>
                 </div>
               </div>

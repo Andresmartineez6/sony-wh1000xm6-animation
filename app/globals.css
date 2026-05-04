@@ -309,3 +309,64 @@ button:focus-visible {
   outline-offset: 2px;
   border-radius: inherit;
 }
+
+/* ——— Custom cursor states ——— */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  a, button, input, textarea, [data-cursor="hover"] { cursor: none; }
+}
+.cursor-ring {
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              height 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.3s ease,
+              background 0.3s ease,
+              opacity 0.3s ease;
+}
+.cursor-ring--hover {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ——— Cinematic section cuts ——— */
+.section-cut {
+  position: relative;
+}
+.section-cut::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100px;
+  background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+.section-cut::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 100px;
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ——— Chapter eyebrow pattern ——— */
+.chapter-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+.chapter-mark::before,
+.chapter-mark::after {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}

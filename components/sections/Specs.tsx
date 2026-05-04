@@ -27,15 +27,15 @@ export default function Specs() {
       <div className="mx-auto max-w-[1280px] px-5 md:px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-3"
+              className="flex mb-5"
             >
-              Especificaciones
-            </motion.p>
+              <span className="chapter-mark">Capítulo VII · Especificaciones</span>
+            </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}

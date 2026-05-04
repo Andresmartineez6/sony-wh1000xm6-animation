@@ -34,15 +34,15 @@ export default function Showcase() {
       <div className="mx-auto max-w-[1320px] px-5 md:px-6">
         {/* Section eyebrow */}
         <div className="text-center mb-16 md:mb-24">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
+            className="flex justify-center mb-6"
           >
-            Producto
-          </motion.p>
+            <span className="chapter-mark">Capítulo V · Anatomía</span>
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}

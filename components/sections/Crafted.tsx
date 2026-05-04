@@ -34,7 +34,7 @@ export default function Crafted() {
         className="pointer-events-none absolute inset-0 -z-0"
         style={{
           background:
-            'radial-gradient(45% 35% at 70% 30%, rgba(0,80,255,0.10) 0%, rgba(0,0,0,0) 70%), radial-gradient(35% 35% at 20% 70%, rgba(0,214,255,0.07) 0%, rgba(0,0,0,0) 70%)',
+            'radial-gradient(45% 35% at 70% 30%, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0) 70%), radial-gradient(35% 35% at 20% 70%, rgba(255,255,255,0.015) 0%, rgba(0,0,0,0) 70%)',
         }}
       />
       <div className="section-divider absolute top-0 inset-x-0" />
@@ -73,7 +73,7 @@ export default function Crafted() {
                 className="absolute inset-0 rounded-3xl pointer-events-none"
                 style={{
                   boxShadow:
-                    'inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 -120px 80px -40px rgba(0,80,255,0.18)',
+                    'inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 -120px 80px -40px rgba(0,0,0,0.5)',
                 }}
               />
               <div className="absolute top-5 right-5 glass-panel rounded-full px-4 py-2 text-[10px] tracking-[0.28em] uppercase text-white/48">
@@ -103,15 +103,15 @@ export default function Crafted() {
 
           {/* Copy column */}
           <div className="lg:col-span-7">
-            <motion.p
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
+              className="flex mb-5"
             >
-              Sobre el desarrollador
-            </motion.p>
+              <span className="chapter-mark">Capítulo IX · Autoría</span>
+            </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
