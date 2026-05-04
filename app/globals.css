@@ -28,6 +28,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Asset protection — prevent casual drag & save */
+img, video, canvas {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: auto;
+}
+img {
+  -webkit-touch-callout: none;
+}
+
 body {
   position: relative;
   min-height: 100vh;

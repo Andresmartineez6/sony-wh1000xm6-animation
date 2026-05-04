@@ -85,7 +85,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="mt-4 text-gradient font-display font-bold tracking-tightest leading-[0.9] text-[17vw] sm:text-[13vw] md:text-[11vw] lg:text-[6.7rem] xl:text-[8rem]"
+            className="mt-4 text-gradient font-display font-bold tracking-tightest leading-[0.9] text-[14vw] sm:text-[12vw] md:text-[11vw] lg:text-[6.7rem] xl:text-[8rem]"
           >
             WH&#8209;1000XM6
           </motion.h1>
@@ -150,7 +150,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="mt-12 grid w-full max-w-[720px] grid-cols-2 gap-3 md:grid-cols-4 lg:max-w-[640px]"
+            className="mt-12 grid w-full max-w-[720px] grid-cols-2 gap-2 sm:gap-3 md:grid-cols-4 lg:max-w-[640px] mx-auto lg:mx-0"
           >
             {HERO_STATS.map((item) => (
               <div key={item.label} className="glass-panel hover-glow rounded-[20px] px-4 py-4 text-center md:px-5 md:py-5">
@@ -173,7 +173,7 @@ export default function Hero() {
         >
           <div className="glass-panel relative overflow-hidden rounded-[32px] p-3 md:p-4 lg:ml-auto lg:max-w-[860px]">
             <div className="absolute inset-x-[16%] top-[6%] h-[18%] rounded-full bg-brand-blue/12 blur-[90px]" />
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#08090c]">
+            <div className="relative aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-[24px] bg-[#08090c]">
               <video
                 autoPlay
                 muted

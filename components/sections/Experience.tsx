@@ -163,7 +163,7 @@ export default function Experience() {
         >
           <div className="glass-panel hover-glow rounded-[30px] p-4 md:p-5 transition-transform duration-500 hover:-translate-y-1">
             <div className="grid gap-5 md:grid-cols-[1.05fr_0.95fr] md:items-stretch">
-              <div className="relative min-h-[260px] overflow-hidden rounded-[24px] border border-white/[0.06] bg-ink-900">
+              <div className="relative min-h-[220px] sm:min-h-[260px] overflow-hidden rounded-[24px] border border-white/[0.06] bg-ink-900">
                 <video
                   autoPlay
                   muted
@@ -198,7 +198,7 @@ export default function Experience() {
                 <p className="text-gradient font-display font-bold tracking-tighter text-3xl md:text-5xl leading-[0.95]">
                   ¿Listo para el silencio?
                 </p>
-                <p className="mt-4 text-white/50 text-[15px] md:text-[16px] max-w-md leading-relaxed">
+                <p className="mt-4 text-white/50 text-[14px] sm:text-[15px] md:text-[16px] max-w-md leading-relaxed">
                   Descubre el bloque técnico completo, revisa la narrativa visual y entiende por qué este rediseño está pensado para sentirse premium de verdad.
                 </p>
                 <div className="mt-6 grid grid-cols-2 gap-3 max-w-md">

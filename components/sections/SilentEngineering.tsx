@@ -36,7 +36,7 @@ const fadeUp = {
 const MACRO_SLOTS = [
   { label: 'Almohadilla', sub: 'Espuma adaptativa', imageSrc: '/assets/almoadilla wh 10000.png', imageClass: 'object-cover object-center scale-[1.06]' },
   { label: 'Articulación', sub: 'Titanio con acabado pulido', imageSrc: '/assets/enganche cascos wh 1000.png', imageClass: 'object-cover object-center scale-[1.04]' },
-  { label: 'Silueta', sub: 'Diadema y copa en equilibrio', imageSrc: '/assets/cascos wh 1000 mejora visual sin fondo.png', imageClass: 'object-cover object-center scale-[1.02]' },
+  { label: 'Silueta', sub: 'Diadema y copa en equilibrio', imageSrc: '/assets/sony-product.jpg', imageClass: 'object-cover object-center scale-[1.08]' },
   { label: 'Puerto', sub: 'USB-C · Carga rápida', imageSrc: '/assets/cascos wh 1000 conector usb 3.0.png', imageClass: 'object-cover object-center scale-[1.05]' },
 ];
 
@@ -93,7 +93,7 @@ export default function SilentEngineering() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-10% 0px' }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto max-w-[1100px] aspect-[21/9] rounded-[28px] overflow-hidden mb-16 md:mb-24"
+          className="relative mx-auto max-w-[1100px] aspect-[5/4] sm:aspect-[16/10] lg:aspect-[21/9] rounded-[28px] overflow-hidden mb-16 md:mb-24"
         >
           {/* Abstract ANC visualization — pure CSS */}
           <div className="absolute inset-0 bg-ink-900">

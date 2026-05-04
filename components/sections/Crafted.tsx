@@ -49,7 +49,7 @@ export default function Crafted() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5"
           >
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-white/[0.08] bg-ink-800 shadow-[0_36px_120px_rgba(0,0,0,0.25)]">
+            <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-3xl overflow-hidden border border-white/[0.08] bg-ink-800 shadow-[0_36px_120px_rgba(0,0,0,0.25)]">
               <Image
                 src="/assets/andres.jpeg"
                 alt="Andrés Lorente Martínez"
@@ -220,7 +220,7 @@ export default function Crafted() {
                 className="btn-ghost"
               >
                 <span className="btn-ghost-line" />
-                andres.martinez@impulsatelecom.com
+                <span className="truncate">andres.martinez@impulsatelecom.com</span>
               </a>
             </div>
           </div>

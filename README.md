@@ -1,143 +1,122 @@
-# Sony WH-1000XM6 · Rediseño web cinematográfico
- 
- <p align="center">
-   <img src="./public/assets/cascos%20wh1000%20mejora%20visual.png" alt="Vista principal del proyecto Sony WH-1000XM6" width="100%" />
- </p>
- 
- ## Qué es este proyecto
- 
- Este proyecto es una reinterpretación visual de una landing de producto para los Sony WH-1000XM6.
- 
- La idea no era hacer una página “bonita” y ya. Quería construir una experiencia con más presencia, más ritmo y una narrativa visual que hiciera justicia al producto: silenciosa, tecnológica y claramente premium.
- 
- El resultado es una web con estética cinematográfica, transiciones cuidadas, scroll narrativo y una composición mucho más editorial que la típica ficha comercial plana.
- 
- ## Qué he querido conseguir
- 
- - **Sensación premium real**
-   No un diseño genérico con cristales y sombras porque sí, sino una dirección visual con peso, contraste y presencia.
- 
- - **Narrativa por secciones**
-   Cada bloque cuenta una parte distinta del producto: impacto inicial, detalle técnico, cancelación de ruido, uso diario y cierre personal.
- 
- - **Movimiento con intención**
-   Animaciones suaves, microinteracciones y una secuencia de frames sincronizada al scroll para reforzar la sensación de producto vivo.
- 
- - **Uso de material visual real**
-   El rediseño aprovecha imágenes y vídeos incluidos en `public` para evitar que la web se sienta maqueta o placeholder.
- 
- ## Vista previa visual
- 
- <table>
-   <tr>
-     <td>
-       <img src="./public/assets/cascos%20wh1000%20mejora%20visual.png" alt="Vista principal del producto" width="100%" />
-     </td>
-     <td>
-       <img src="./public/assets/cascos%20wh%201000%20mejora%20visual%20sin%20fondo.png" alt="Producto en negro con iluminación azul" width="100%" />
-     </td>
-   </tr>
-   <tr>
-     <td>
-       <img src="./public/assets/almoadilla%20wh%2010000.png" alt="Detalle macro de la almohadilla" width="100%" />
-     </td>
-     <td>
-       <img src="./public/assets/enganche%20cascos%20wh%201000.png" alt="Detalle macro de la articulación" width="100%" />
-     </td>
-   </tr>
-   <tr>
-     <td colspan="2">
-       <img src="./public/assets/cascos%20wh%201000%20conector%20usb%203.0.png" alt="Detalle del puerto USB-C" width="100%" />
-     </td>
-   </tr>
- </table>
- 
- ## Puntos fuertes a nivel técnico
- 
- - **Next.js 14 con App Router**
-   Estructura moderna, limpia y preparada para export estático.
- 
- - **TypeScript**
-   Tipado sólido para mantener el proyecto controlado a medida que crece.
- 
- - **Tailwind CSS**
-   Sistema visual propio con utilidades para superficies glass, divisores, botones premium y capas ambientales.
- 
- - **Framer Motion**
-   Animación de entrada, transiciones de scroll y microinteracciones en prácticamente toda la experiencia.
- 
- - **Canvas + secuencia de frames**
-   El bloque principal de scroll utiliza una secuencia de 145 frames para dar una sensación más cinematográfica y precisa.
- 
- - **Compatibilidad con export estático**
-   El proyecto está preparado para desplegarse como sitio estático.
- 
- ## Estructura principal
- 
- - **`app/page.tsx`**
-   Orquesta toda la experiencia y compone las secciones principales.
- 
- - **`components/Navbar.tsx`**
-   Navegación flotante con estética más editorial y premium.
- 
- - **`components/sections/Hero.tsx`**
-   Apertura principal con vídeo, copy de impacto y CTA.
- 
- - **`components/ScrollScene.tsx`**
-   Núcleo narrativo del proyecto con canvas, secuencia de frames y beats editoriales.
- 
- - **`components/sections/Showcase.tsx`**
-   Presentación visual del producto y su anatomía.
- 
- - **`components/sections/SilentEngineering.tsx`**
-   Bloque técnico centrado en materiales, cancelación de ruido y detalle constructivo.
- 
- - **`components/sections/Experience.tsx`**
-   Escenarios de uso real con apoyo visual y cierre de producto.
- 
- - **`components/sections/Crafted.tsx`**
-   Cierre personal sobre el creador del proyecto.
- 
- - **`lib/frames.ts`**
-   Configuración de la secuencia de imágenes usada por el canvas.
- 
- ## Cómo arrancarlo en local
- 
- ```bash
- npm install
- npm run dev
- ```
- 
- El proyecto levanta en:
- 
- ```bash
- http://localhost:3010
- ```
- 
- Para generar la versión de producción:
- 
- ```bash
- npm run build
- ```
- 
- ## Sobre la secuencia de frames
- 
- La animación principal trabaja con los frames almacenados en `public/frames/`.
- 
- Si quieres ajustar el número total de imágenes o cambiar el formato, puedes hacerlo desde `lib/frames.ts`.
- 
- ## Autor
- 
- **Andrés Lorente Martínez**
- 
- Desarrollo, diseño de interacción y dirección visual.
- 
- - **Portfolio**: [andreslorentemartinez.dev](https://andreslorentemartinez.dev)
- - **GitHub**: [Andresmartineez6](https://github.com/Andresmartineez6)
- - **Email**: [andres.martinez@impulsatelecom.com](mailto:andres.martinez@impulsatelecom.com)
- 
- ## Nota
- 
- Este proyecto es una pieza experimental de diseño y desarrollo frontend.
- 
- No es una web oficial de Sony ni pretende representar material comercial definitivo de la marca.
+<p align="center">
+  <img src="./public/assets/sony-logo.png" alt="Sony" height="32" />
+</p>
+
+<h1 align="center">WH-1000XM6 · Rediseño web cinematográfico</h1>
+
+<p align="center">
+  Experiencia visual interactiva para los auriculares flagship de Sony.<br/>
+  Scroll narrativo · 145 frames · Next.js 14 · Framer Motion · Tailwind CSS
+</p>
+
+---
+
+<p align="center">
+  <img src="./public/assets/cascos%20wh1000%20mejora%20visual.png" alt="Sony WH-1000XM6 — vista principal" width="100%" />
+</p>
+
+## Qué es esto
+
+Una reinterpretación visual completa de la landing de producto de los Sony WH-1000XM6.
+
+No quería hacer una página "bonita" sin más. Quería construir algo con presencia real, ritmo, narrativa y una dirección visual más cercana a una pieza de cine de producto que a una ficha comercial genérica.
+
+El resultado es una experiencia con scroll cinematográfico, 145 frames sincronizados en canvas, glassmorphism con intención, y un nivel de detalle que se nota en cada transición.
+
+## Objetivo del proyecto
+
+- **Sensación premium sin trampas** — Dirección visual con peso, contraste y presencia. Nada de cristales decorativos porque sí.
+- **Narrativa por secciones** — Cada bloque cuenta una parte del producto: impacto inicial, ingeniería, cancelación de ruido, sonido, experiencia de uso y cierre personal.
+- **Movimiento con intención** — Microinteracciones, parallax controlado y una secuencia de frames ligada al scroll que refuerza la sensación de producto vivo.
+- **Material visual real** — Fotografías de producto propias, renders y vídeo integrado. Sin placeholders, sin genéricos.
+
+## Galería
+
+<table>
+  <tr>
+    <td><img src="./public/assets/cascos%20wh1000%20mejora%20visual.png" alt="Product shot principal" width="100%" /></td>
+    <td><img src="./public/assets/sony-product.jpg" alt="Silueta sobre fondo oscuro" width="100%" /></td>
+  </tr>
+  <tr>
+    <td><img src="./public/assets/almoadilla%20wh%2010000.png" alt="Macro — almohadilla adaptativa" width="100%" /></td>
+    <td><img src="./public/assets/enganche%20cascos%20wh%201000.png" alt="Macro — articulación de titanio" width="100%" /></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="./public/assets/cascos%20wh%201000%20conector%20usb%203.0.png" alt="Detalle del puerto USB-C" width="100%" /></td>
+  </tr>
+</table>
+
+## Stack técnico
+
+| Tecnología | Uso |
+|---|---|
+| **Next.js 14** | App Router, export estático, estructura moderna |
+| **TypeScript** | Tipado sólido en todo el proyecto |
+| **Tailwind CSS** | Sistema visual propio: glass, divisores, botones premium, capas ambientales |
+| **Framer Motion** | Scroll-linked animations, reveals, microinteracciones |
+| **HTML5 Canvas** | Secuencia de 145 frames sincronizados al scroll a 60 fps |
+| **Netlify** | Despliegue estático con headers de protección |
+
+## Estructura del proyecto
+
+```
+app/
+  page.tsx              ← Composición principal de la experiencia
+  globals.css           ← Sistema visual global (glass, gradients, buttons)
+
+components/
+  Navbar.tsx            ← Navegación flotante editorial
+  IntroOverlay.tsx      ← Pantalla de carga cinematográfica
+  ScrollScene.tsx       ← Núcleo narrativo: canvas + beats editoriales
+  FallbackDiagram.tsx   ← Fallback SVG si faltan frames
+  sections/
+    Hero.tsx            ← Apertura con vídeo y copy de impacto
+    Showcase.tsx        ← Producto y anatomía técnica
+    SilentEngineering   ← Materiales, ANC, detalle constructivo
+    Specs.tsx           ← Especificaciones en grid con marquee
+    Experience.tsx      ← Escenarios de uso real + vídeo
+    Crafted.tsx         ← Cierre personal del creador
+    Footer.tsx          ← Footer editorial con enlaces y copyright
+
+lib/
+  frames.ts             ← Config de la secuencia de imágenes del canvas
+
+public/
+  assets/               ← Fotos de producto, logos, renders y vídeos
+  frames/               ← 145 fotogramas WebP para el scroll narrativo
+```
+
+## Arranque local
+
+```bash
+npm install
+npm run dev
+```
+
+Accede en **http://localhost:3010**
+
+Build de producción:
+
+```bash
+npm run build
+```
+
+## Secuencia de frames
+
+La animación del bloque principal usa 145 frames WebP almacenados en `public/frames/`. Se pueden ajustar en `lib/frames.ts` (cantidad, formato, ruta).
+
+## Autor
+
+**Andrés Lorente Martínez** — Baza, Granada
+
+Desarrollo, diseño de interacción y dirección visual.
+
+| | |
+|---|---|
+| **Portfolio** | [andreslorentemartinez.dev](https://andreslorentemartinez.dev) |
+| **GitHub** | [Andresmartineez6](https://github.com/Andresmartineez6) |
+| **Email** | [andres.martinez@impulsatelecom.com](mailto:andres.martinez@impulsatelecom.com) |
+
+---
+
+> Este proyecto es una pieza experimental de diseño y desarrollo frontend. No es una web oficial de Sony ni pretende representar material comercial de la marca.

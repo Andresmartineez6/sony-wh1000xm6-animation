@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Prevent indexing of raw assets
+Disallow: /assets/
+Disallow: /frames/
+Disallow: /_Smoothly_transition_from_sony.mp4
