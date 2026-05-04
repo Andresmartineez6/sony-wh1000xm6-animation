@@ -73,7 +73,7 @@ export default function SilentEngineering() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="text-gradient font-display font-bold tracking-tighter text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.92]"
           >
-            El ruido no tiene<br />dónde esconderse.
+            Materia,<br />precisión, detalle.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
@@ -82,64 +82,10 @@ export default function SilentEngineering() {
             transition={{ duration: 0.8, delay: 0.15 }}
             className="mt-6 mx-auto max-w-2xl text-white/46 text-[15px] md:text-[17px] leading-relaxed"
           >
-            Tres capas de tecnología trabajando en milisegundos para crear un espacio
-            de silencio absoluto alrededor de tu música.
+            Cada componente está seleccionado con obsesión. Titanio, poliuretano,
+            fibra de carbono — los materiales que dan a XM6 su silueta icónica.
           </motion.p>
         </div>
-
-        {/* Visual + ANC wave */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: '-10% 0px' }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto max-w-[1100px] aspect-[5/4] sm:aspect-[16/10] lg:aspect-[21/9] rounded-[28px] overflow-hidden mb-16 md:mb-24"
-        >
-          {/* Abstract ANC visualization — pure CSS */}
-          <div className="absolute inset-0 bg-ink-900">
-            {/* Wave lines */}
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute left-0 right-0"
-                style={{
-                  top: `${22 + i * 14}%`,
-                  height: '1px',
-                  background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,${0.04 + i * 0.02}) 20%, rgba(255,255,255,${0.08 + i * 0.02}) 50%, rgba(255,255,255,${0.04 + i * 0.02}) 80%, transparent 100%)`,
-                  opacity: 0.6 + i * 0.08,
-                  transform: `scaleY(${1 + i * 0.3})`,
-                  filter: `blur(${i * 0.5}px)`,
-                }}
-              />
-            ))}
-            {/* Center silence zone */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background: 'radial-gradient(30% 50% at 50% 50%, rgba(3,3,3,0.95) 0%, rgba(3,3,3,0) 100%)',
-              }}
-            />
-            {/* Center glow */}
-            <div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] md:w-[320px] md:h-[320px] rounded-full"
-              style={{
-                background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 40%, rgba(0,0,0,0) 70%)',
-              }}
-            />
-          </div>
-          {/* Labels */}
-          <div className="absolute top-5 left-5 glass-panel rounded-full px-4 py-2 text-[10px] tracking-[0.28em] uppercase text-white/48">
-            ANC &middot; Visualización
-          </div>
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
-            <p className="text-[28px] md:text-[42px] font-display font-bold text-gradient tracking-tighter">
-              −30 dB
-            </p>
-            <p className="text-[10px] tracking-[0.28em] uppercase text-white/38 mt-1">
-              Reducción de ruido ambiental
-            </p>
-          </div>
-        </motion.div>
 
         {/* Feature cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">

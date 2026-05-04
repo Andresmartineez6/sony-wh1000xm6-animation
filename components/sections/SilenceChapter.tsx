@@ -1,167 +1,241 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 /**
- * Capítulo I — Silencio
- * Visualización abstracta de cancelación de ruido.
- * Ondas sonoras que entran desde los lados, colisionan en el centro y se cancelan.
- * Pura motion design en SVG — cero imágenes.
+ * Capítulo II — Silencio
+ * Editorial cinematic chapter. Un waveform sinusoidal animado en canvas que
+ * se aplana progresivamente con el scroll — metáfora visual real de la
+ * cancelación de ruido. Acompañado de tipografía editorial y un grid de stats.
  */
 export default function SilenceChapter() {
   const ref = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const amplitudeRef = useRef(1);
+  const rafRef = useRef<number | null>(null);
+  const phaseRef = useRef(0);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
 
-  // Las ondas entran y se cancelan progresivamente
-  const wavesOpacity = useTransform(scrollYProgress, [0.1, 0.4, 0.7, 0.9], [0, 1, 1, 0.2]);
-  const cancelProgress = useTransform(scrollYProgress, [0.3, 0.65], [0, 1]);
-  const silenceOpacity = useTransform(scrollYProgress, [0.55, 0.8], [0, 1]);
+  // Transforms para el layout editorial
+  const titleOpacity = useTransform(scrollYProgress, [0.1, 0.25, 0.75, 0.95], [0, 1, 1, 0]);
   const titleY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const statsOpacity = useTransform(scrollYProgress, [0.35, 0.5, 0.85, 0.95], [0, 1, 1, 0]);
+  const statsY = useTransform(scrollYProgress, [0.35, 0.5], [20, 0]);
+  const canvasOpacity = useTransform(scrollYProgress, [0.05, 0.2, 0.9, 1], [0, 1, 1, 0]);
+  const scrollBarScale = useTransform(scrollYProgress, [0.2, 0.8], [0, 1]);
+
+  // Amplitude of waveform collapses from 1 → 0 as the cancellation chapter progresses
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    // 0.2 → 0.75 maps to 1 → 0.02 (from full wave to near-flat line)
+    const t = Math.max(0, Math.min(1, (v - 0.2) / 0.55));
+    amplitudeRef.current = 1 - t * 0.98;
+  });
+
+  // Canvas animation: sine wave modulated by amplitudeRef
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      const mid = height / 2;
+      const amp = amplitudeRef.current;
+      phaseRef.current += 0.012;
+
+      // === Incoming raw waveform (white, strong) ===
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = `rgba(255,255,255,${0.75})`;
+      ctx.beginPath();
+      for (let x = 0; x <= width; x += 2) {
+        const t = x / width;
+        const envelope = Math.exp(-Math.pow((t - 0.5) * 1.6, 2)) * 0.9 + 0.1;
+        const y =
+          mid +
+          Math.sin(t * 18 + phaseRef.current) * 28 * amp * envelope +
+          Math.sin(t * 42 + phaseRef.current * 1.6) * 14 * amp * envelope +
+          Math.sin(t * 80 + phaseRef.current * 0.7) * 6 * amp * envelope;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // === Anti-phase waveform (ghost, subtle white) — only visible when amp still > 0 ===
+      if (amp > 0.1) {
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = `rgba(255,255,255,${0.22 * amp})`;
+        ctx.beginPath();
+        for (let x = 0; x <= width; x += 2) {
+          const t = x / width;
+          const envelope = Math.exp(-Math.pow((t - 0.5) * 1.6, 2)) * 0.9 + 0.1;
+          const y =
+            mid -
+            (Math.sin(t * 18 + phaseRef.current) * 28 * amp * envelope +
+              Math.sin(t * 42 + phaseRef.current * 1.6) * 14 * amp * envelope +
+              Math.sin(t * 80 + phaseRef.current * 0.7) * 6 * amp * envelope);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      // === Flat silence line (always visible, grows stronger as amp → 0) ===
+      const flatAlpha = 0.15 + (1 - amp) * 0.55;
+      ctx.strokeStyle = `rgba(255,255,255,${flatAlpha})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, mid);
+      ctx.lineTo(width, mid);
+      ctx.stroke();
+
+      // === Tick marks on silence line ===
+      ctx.strokeStyle = `rgba(255,255,255,${0.25 + (1 - amp) * 0.2})`;
+      ctx.lineWidth = 1;
+      const ticks = 24;
+      for (let i = 0; i <= ticks; i++) {
+        const x = (i / ticks) * width;
+        const h = i % 6 === 0 ? 10 : 4;
+        ctx.beginPath();
+        ctx.moveTo(x, mid + 22);
+        ctx.lineTo(x, mid + 22 + h);
+        ctx.stroke();
+      }
+
+      rafRef.current = requestAnimationFrame(render);
+    };
+    render();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   return (
     <section
       id="silence"
       ref={ref}
-      className="relative min-h-[180vh] bg-black overflow-hidden"
+      className="relative bg-black overflow-hidden"
+      style={{ height: '220vh' }}
     >
-      {/* Sticky cinematic stage */}
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Chapter label */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
+        {/* Top chapter row */}
         <motion.div
-          style={{ y: titleY }}
-          className="absolute top-[14vh] left-1/2 -translate-x-1/2 text-center pointer-events-none"
+          style={{ y: titleY, opacity: titleOpacity }}
+          className="relative z-10 pt-[12vh] md:pt-[14vh] px-6 md:px-12 flex justify-between items-start gap-6"
         >
-          <p className="text-[10px] tracking-[0.45em] uppercase text-white/30 mb-3">
-            Capítulo I
-          </p>
-          <p className="text-[10px] tracking-[0.35em] uppercase text-white/20">
-            Silencio
-          </p>
+          <div>
+            <p className="text-[10px] tracking-[0.4em] uppercase text-white/35 mb-3">
+              Capítulo II
+            </p>
+            <h2 className="font-display font-bold tracking-tightest text-white leading-[0.88] text-[13vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[6rem]">
+              Silencio.
+            </h2>
+          </div>
+          <div className="hidden md:block text-right">
+            <p className="text-[10px] tracking-[0.32em] uppercase text-white/30 mb-2">
+              Adaptive ANC
+            </p>
+            <p className="text-[10px] tracking-[0.32em] uppercase text-white/22">
+              QN3 · 12 MIC
+            </p>
+          </div>
         </motion.div>
 
-        {/* Abstract sound waves SVG */}
+        {/* Center waveform stage */}
         <motion.div
-          style={{ opacity: wavesOpacity }}
-          className="absolute inset-0 flex items-center justify-center"
+          style={{ opacity: canvasOpacity }}
+          className="relative flex-1 mx-6 md:mx-12 my-6 md:my-8 flex items-center justify-center"
         >
-          <SoundWaves cancelProgress={cancelProgress} />
+          {/* Rule labels top */}
+          <div className="absolute top-0 left-0 right-0 flex justify-between text-[9px] tracking-[0.3em] uppercase text-white/22">
+            <span>Waveform · entrada</span>
+            <span>1000 Hz · ref</span>
+          </div>
+
+          <canvas
+            ref={canvasRef}
+            className="w-full h-full"
+            style={{ display: 'block' }}
+          />
+
+          {/* Rule labels bottom */}
+          <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[9px] tracking-[0.3em] uppercase text-white/22">
+            <span>{'20 Hz'}</span>
+            <span>{'Silencio'}</span>
+            <span>{'20 kHz'}</span>
+          </div>
         </motion.div>
 
-        {/* Center silence label */}
+        {/* Bottom editorial row: copy + stats */}
         <motion.div
-          style={{ opacity: silenceOpacity }}
-          className="relative z-10 text-center px-6 max-w-[42rem]"
+          style={{ opacity: statsOpacity, y: statsY }}
+          className="relative z-10 px-6 md:px-12 pb-[10vh] md:pb-[12vh] grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-8 md:gap-12 items-end"
         >
-          <h2 className="font-display font-bold tracking-tightest text-white text-[15vw] sm:text-[11vw] md:text-[8.5vw] lg:text-[7rem] leading-[0.88]">
-            Silencio.
-          </h2>
-          <p className="mt-6 text-white/45 text-[14px] md:text-[16px] leading-relaxed max-w-[28rem] mx-auto">
-            Doce micrófonos, un procesador QN3 dedicado y 700 análisis por segundo.
-            El ruido se cancela antes de que llegue a tus oídos.
+          <p className="text-white/55 text-[14px] md:text-[16px] leading-relaxed max-w-[34rem]">
+            El procesador QN3 analiza 700 señales por segundo y genera una onda
+            inversa que anula el ruido antes de que llegue al oído. Lo que queda,
+            es esto. <span className="text-white/85">Silencio.</span>
           </p>
+
+          <div className="grid grid-cols-4 gap-0 border-t border-white/[0.08]">
+            {[
+              { n: '−30', u: 'dB', l: 'Reducción' },
+              { n: '700', u: '/s', l: 'Señales' },
+              { n: '12', u: 'mic', l: 'Array ANC' },
+              { n: 'QN3', u: '', l: 'Chip' },
+            ].map((s, i) => (
+              <div
+                key={s.l}
+                className={`py-4 px-3 text-left ${i > 0 ? 'border-l border-white/[0.08]' : ''}`}
+              >
+                <p className="font-display font-bold tracking-tight text-white/95 text-[22px] md:text-[28px] leading-none">
+                  {s.n}
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-white/35 ml-1">
+                    {s.u}
+                  </span>
+                </p>
+                <p className="mt-2 text-[9px] tracking-[0.28em] uppercase text-white/35">
+                  {s.l}
+                </p>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Bottom progress indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 text-[10px] tracking-[0.3em] uppercase text-white/25">
+        {/* Scroll progress for chapter */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 text-[9px] tracking-[0.32em] uppercase text-white/30 z-10">
           <span>Cancelación</span>
-          <div className="w-24 h-[1px] bg-white/10 overflow-hidden">
+          <div className="w-28 h-[1px] bg-white/10 overflow-hidden">
             <motion.div
-              style={{ scaleX: cancelProgress, transformOrigin: 'left' }}
+              style={{ scaleX: scrollBarScale, transformOrigin: 'left' }}
               className="h-full bg-white/60"
             />
           </div>
-          <span>−30 dB</span>
+          <span>Silencio</span>
         </div>
       </div>
     </section>
-  );
-}
-
-function SoundWaves({ cancelProgress }: { cancelProgress: any }) {
-  // Generate concentric arcs that come from the sides and meet in center
-  const leftWavesX = useTransform(cancelProgress, [0, 1], [0, 50]);
-  const rightWavesX = useTransform(cancelProgress, [0, 1], [0, -50]);
-  const wavesOpacity = useTransform(cancelProgress, [0, 0.6, 1], [0.85, 0.6, 0.05]);
-
-  return (
-    <svg
-      viewBox="0 0 1200 600"
-      className="w-full h-full"
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden
-    >
-      <defs>
-        <radialGradient id="silenceCore" cx="50%" cy="50%" r="20%">
-          <stop offset="0%" stopColor="rgba(0,0,0,0.95)" />
-          <stop offset="60%" stopColor="rgba(0,0,0,0.7)" />
-          <stop offset="100%" stopColor="rgba(0,0,0,0)" />
-        </radialGradient>
-        <linearGradient id="waveGradL" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-          <stop offset="100%" stopColor="rgba(255,255,255,0.55)" />
-        </linearGradient>
-        <linearGradient id="waveGradR" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
-          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-        </linearGradient>
-      </defs>
-
-      {/* Left side incoming waves */}
-      <motion.g style={{ x: leftWavesX, opacity: wavesOpacity }}>
-        {[0, 1, 2, 3, 4, 5, 6].map((i) => {
-          const r = 80 + i * 60;
-          return (
-            <motion.path
-              key={`l-${i}`}
-              d={`M 600,${300 - r} A ${r},${r} 0 0 0 600,${300 + r}`}
-              fill="none"
-              stroke="url(#waveGradL)"
-              strokeWidth={1.4 - i * 0.1}
-              transform={`translate(-${i * 35}, 0)`}
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 2 + i * 0.2, ease: 'easeOut', delay: i * 0.1 }}
-              style={{ opacity: 0.9 - i * 0.08 }}
-            />
-          );
-        })}
-      </motion.g>
-
-      {/* Right side incoming waves (anti-phase) */}
-      <motion.g style={{ x: rightWavesX, opacity: wavesOpacity }}>
-        {[0, 1, 2, 3, 4, 5, 6].map((i) => {
-          const r = 80 + i * 60;
-          return (
-            <motion.path
-              key={`r-${i}`}
-              d={`M 600,${300 - r} A ${r},${r} 0 0 1 600,${300 + r}`}
-              fill="none"
-              stroke="url(#waveGradR)"
-              strokeWidth={1.4 - i * 0.1}
-              transform={`translate(${i * 35}, 0)`}
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 2 + i * 0.2, ease: 'easeOut', delay: i * 0.1 }}
-              style={{ opacity: 0.9 - i * 0.08 }}
-            />
-          );
-        })}
-      </motion.g>
-
-      {/* Vertical center reference line */}
-      <line x1="600" y1="80" x2="600" y2="520" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="2 6" />
-
-      {/* Silence core mask */}
-      <circle cx="600" cy="300" r="160" fill="url(#silenceCore)" />
-
-      {/* Tick marks for technical feel */}
-      {[200, 400, 600, 800, 1000].map((x) => (
-        <line key={x} x1={x} y1="540" x2={x} y2="546" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-      ))}
-    </svg>
   );
 }
