@@ -14,20 +14,62 @@ const SPECS = [
 export default function Specs() {
   return (
     <section id="specs" className="relative bg-ink-900 py-28 md:py-40">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(40% 30% at 18% 20%, rgba(0, 80, 255, 0.08) 0%, rgba(0,0,0,0) 70%), radial-gradient(32% 26% at 80% 74%, rgba(0, 214, 255, 0.05) 0%, rgba(0,0,0,0) 70%)',
+        }}
+      />
+      <div className="section-divider absolute top-0 inset-x-0" />
 
       <div className="mx-auto max-w-[1280px] px-5 md:px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <p className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-3">Especificaciones</p>
-            <h2 className="text-gradient font-display font-bold tracking-tighter text-3xl sm:text-4xl md:text-6xl leading-[1]">
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-3"
+            >
+              Especificaciones
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="text-gradient font-display font-bold tracking-tighter text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.92]"
+            >
               Cada detalle,<br /> deliberado.
-            </h2>
+            </motion.h2>
           </div>
-          <p className="text-white/55 max-w-md text-[15px] leading-relaxed">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="text-white/55 max-w-md text-[15px] leading-relaxed"
+          >
             Una plataforma completa rediseñada para rendimiento flagship &mdash; desde el procesador integrado hasta la geometría de la diadema.
-          </p>
+          </motion.p>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="glass-panel rounded-[28px] p-5 md:p-6 mb-8 md:mb-10"
+        >
+          <div className="flex flex-wrap gap-x-8 gap-y-3 text-[10.5px] tracking-[0.26em] uppercase text-white/42">
+            {['Hi‑Res Audio Wireless', 'Adaptive ANC', 'LDAC', 'LE Audio', 'Speak‑to‑Chat', 'Auracast Ready'].map((item) => (
+              <span key={item} className="whitespace-nowrap">{item}</span>
+            ))}
+          </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] rounded-2xl overflow-hidden border border-white/[0.06]">
           {SPECS.map((s, i) => (
@@ -37,7 +79,7 @@ export default function Specs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.05 }}
-              className="bg-ink-800 p-8 md:p-10"
+              className="bg-ink-800/90 p-8 md:p-10 hover:bg-ink-800 transition-colors duration-500"
             >
               <p className="text-[10.5px] tracking-[0.3em] uppercase text-white/40 mb-4">{s.label}</p>
               <p className="text-gradient font-display font-bold text-4xl md:text-5xl tracking-tight">{s.value}</p>
@@ -46,15 +88,31 @@ export default function Specs() {
           ))}
         </div>
 
-        <div className="mt-16 overflow-hidden">
-          <div className="hairline mb-6" />
-          <div className="flex flex-wrap gap-x-10 gap-y-3 text-[12px] tracking-[0.22em] uppercase text-white/40">
-            {['Hi\u2011Res Audio Wireless','LDAC','LE Audio','DSEE Extreme','360 Reality Audio','Multipoint','Speak\u2011to\u2011Chat','Auracast ready'].map((t) => (
-              <span key={t} className="whitespace-nowrap">&middot; {t}</span>
-            ))}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-16 overflow-hidden glass-panel rounded-[28px] py-5 md:py-6"
+        >
+          <div className="hairline mb-5" />
+          <div className="overflow-hidden relative">
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-r from-ink-800 to-transparent" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-l from-ink-800 to-transparent" />
+            <div className="animate-marquee flex whitespace-nowrap gap-x-10">
+              {[...Array(2)].map((_, r) => (
+                <div key={r} className="flex gap-x-10 shrink-0">
+                  {['Hi\u2011Res Audio Wireless','LDAC','LE Audio','DSEE Extreme','360 Reality Audio','Multipoint','Speak\u2011to\u2011Chat','Auracast Ready','Bluetooth 5.3','USB\u2011C','NFC'].map((t) => (
+                    <span key={`${r}-${t}`} className="text-[11.5px] tracking-[0.24em] uppercase text-white/35 whitespace-nowrap">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="hairline mt-6" />
-        </div>
+          <div className="hairline mt-5" />
+        </motion.div>
       </div>
     </section>
   );
