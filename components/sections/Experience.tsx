@@ -52,7 +52,7 @@ export default function Experience() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(45% 35% at 20% 30%, rgba(0, 80, 255, 0.08) 0%, rgba(0,0,0,0) 65%), radial-gradient(40% 35% at 75% 70%, rgba(0, 214, 255, 0.05) 0%, rgba(0,0,0,0) 60%)',
+            'radial-gradient(45% 35% at 20% 30%, rgba(255, 255, 255, 0.02) 0%, rgba(0,0,0,0) 65%), radial-gradient(40% 35% at 75% 70%, rgba(255, 255, 255, 0.01) 0%, rgba(0,0,0,0) 60%)',
         }}
       />
       <div className="section-divider absolute top-0 inset-x-0" />
@@ -64,7 +64,7 @@ export default function Experience() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-4"
+            className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
           >
             Experiencia
           </motion.p>
@@ -104,7 +104,7 @@ export default function Experience() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 rounded-[24px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                 style={{
-                  background: 'radial-gradient(50% 50% at 50% 40%, rgba(0,80,255,0.06) 0%, rgba(0,0,0,0) 70%)',
+                  background: 'radial-gradient(50% 50% at 50% 40%, rgba(255,255,255,0.015) 0%, rgba(0,0,0,0) 70%)',
                 }}
               />
 
@@ -184,7 +184,7 @@ export default function Experience() {
                   </span>
                 </div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-[10px] tracking-[0.28em] uppercase text-brand-cyan/80">Movimiento y presencia</p>
+                  <p className="text-[10px] tracking-[0.28em] uppercase text-white/40">Movimiento y presencia</p>
                   <p className="mt-2 max-w-[24rem] text-white/86 text-[18px] md:text-[22px] font-medium tracking-tight leading-snug">
                     Una pieza pensada para verse premium incluso detenida en un frame.
                   </p>

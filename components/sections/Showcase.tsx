@@ -26,7 +26,7 @@ export default function Showcase() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(42% 34% at 18% 24%, rgba(0, 80, 255, 0.08) 0%, rgba(0,0,0,0) 72%), radial-gradient(38% 30% at 82% 68%, rgba(0, 214, 255, 0.05) 0%, rgba(0,0,0,0) 70%)',
+            'radial-gradient(42% 34% at 18% 24%, rgba(255, 255, 255, 0.02) 0%, rgba(0,0,0,0) 72%), radial-gradient(38% 30% at 82% 68%, rgba(255, 255, 255, 0.01) 0%, rgba(0,0,0,0) 70%)',
         }}
       />
       <div className="section-divider absolute top-0 inset-x-0" />
@@ -39,7 +39,7 @@ export default function Showcase() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-4"
+            className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
           >
             Producto
           </motion.p>
@@ -96,7 +96,7 @@ export default function Showcase() {
           </div>
           <div className="absolute bottom-5 left-5 right-5 z-20 grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_auto] md:items-end">
             <div className="glass-panel rounded-2xl px-5 py-4 md:max-w-[430px] text-left">
-              <p className="text-[10px] tracking-[0.28em] uppercase text-brand-cyan/80">Firma sonora</p>
+              <p className="text-[10px] tracking-[0.28em] uppercase text-white/40">Firma sonora</p>
               <p className="mt-2 text-white/88 text-lg md:text-[1.4rem] tracking-tight font-medium">
                 Una silueta limpia, precisa y reconocible incluso antes de pulsar play.
               </p>
@@ -119,7 +119,7 @@ export default function Showcase() {
             className="lg:col-span-5"
           >
             <div className="glass-panel rounded-[28px] p-6 md:p-8">
-            <p className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-4">
+            <p className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4">
               Anatomía
             </p>
             <h3 className="text-gradient font-display font-bold tracking-tighter text-2xl sm:text-3xl md:text-5xl leading-[1]">
@@ -138,7 +138,7 @@ export default function Showcase() {
                 'Cuerpo en aluminio anodizado matte',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <span className="mt-1 h-[5px] w-[5px] rounded-full bg-brand-cyan/80 shrink-0" />
+                  <span className="mt-1 h-[5px] w-[5px] rounded-full bg-white/40 shrink-0" />
                   {item}
                 </li>
               ))}

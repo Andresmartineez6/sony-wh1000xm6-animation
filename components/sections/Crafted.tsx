@@ -93,7 +93,7 @@ export default function Crafted() {
                   href="https://andreslorentemartinez.dev"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[10.5px] tracking-[0.22em] uppercase text-brand-cyan/90 hover:text-white transition-colors"
+                  className="text-[10.5px] tracking-[0.22em] uppercase text-white/50 hover:text-white transition-colors"
                 >
                   Portfolio &rarr;
                 </a>
@@ -108,7 +108,7 @@ export default function Crafted() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-4"
+              className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
             >
               Sobre el desarrollador
             </motion.p>

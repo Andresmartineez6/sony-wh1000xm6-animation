@@ -12,7 +12,7 @@ export default function Footer() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(40% 30% at 15% 25%, rgba(0, 80, 255, 0.08) 0%, rgba(0,0,0,0) 70%), radial-gradient(36% 28% at 80% 70%, rgba(0, 214, 255, 0.05) 0%, rgba(0,0,0,0) 70%)',
+            'radial-gradient(40% 30% at 15% 25%, rgba(255, 255, 255, 0.02) 0%, rgba(0,0,0,0) 70%), radial-gradient(36% 28% at 80% 70%, rgba(255, 255, 255, 0.01) 0%, rgba(0,0,0,0) 70%)',
         }}
       />
       <div className="mx-auto max-w-[1280px] px-5 md:px-6 py-16 md:py-24">
@@ -26,7 +26,7 @@ export default function Footer() {
         >
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-[10.5px] tracking-[0.28em] uppercase text-brand-cyan/80 mb-4">
+              <p className="text-[10.5px] tracking-[0.28em] uppercase text-white/40 mb-4">
                 Cierre de experiencia
               </p>
               <h2 className="text-gradient font-display font-bold tracking-tighter text-3xl md:text-5xl lg:text-[4.2rem] leading-[0.92]">

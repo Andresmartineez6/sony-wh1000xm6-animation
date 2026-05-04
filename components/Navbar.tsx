@@ -35,69 +35,53 @@ export default function Navbar() {
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
-      animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      animate={{ y: hidden ? -80 : 0, opacity: hidden ? 0 : 1 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="fixed top-0 inset-x-0 z-50"
     >
-      <div className="mx-auto max-w-[1480px] px-4 md:px-6 pt-3 md:pt-4">
-        <nav className={`glass-panel relative overflow-hidden rounded-[22px] md:rounded-full px-4 md:px-6 h-[68px] md:h-[78px] flex items-center justify-between transition-all duration-500 ${
-          scrolled ? 'shadow-[0_24px_70px_rgba(0,0,0,0.32)]' : 'shadow-[0_12px_40px_rgba(0,0,0,0.18)]'
-        }`}>
-          <div aria-hidden className="absolute inset-y-0 right-[18%] w-[24%] bg-[radial-gradient(circle_at_center,rgba(143,216,255,0.1),rgba(0,0,0,0))] blur-2xl" />
-          <a href="#top" className="relative z-10 flex items-center gap-4 md:gap-5 group">
-            <div className="relative">
-              <div aria-hidden className="absolute -inset-x-5 -inset-y-4 rounded-full bg-white/[0.04] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100" />
-              <Image
-                src="/assets/sony-logo-white.png"
-                alt="Sony"
-                width={176}
-                height={30}
-                className="relative h-6 md:h-7 lg:h-8 w-auto opacity-95 group-hover:opacity-100 transition-opacity"
-                priority
-              />
-            </div>
-            <span className="hidden md:inline h-7 w-px bg-white/12" />
-            <div className="hidden md:flex flex-col">
-              <span className="text-[11px] tracking-[0.24em] font-semibold text-white/86 transition-colors group-hover:text-white">
-                WH&#8209;1000XM6
-              </span>
-              <span className="text-[9px] tracking-[0.24em] uppercase text-white/34">
-                Signature Noise Cancelling
-              </span>
-            </div>
+      <nav className={`relative flex items-center justify-between px-5 md:px-8 lg:px-12 h-[52px] md:h-[56px] transition-all duration-400 ${
+        scrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/[0.06]' : 'bg-transparent'
+      }`}>
+        <a href="#top" className="relative z-10 flex items-center group">
+          <Image
+            src="/assets/sony-logo-white.png"
+            alt="Sony"
+            width={200}
+            height={34}
+            className="h-[22px] md:h-[26px] w-auto opacity-95 group-hover:opacity-100 transition-opacity"
+            priority
+          />
+        </a>
+
+        <ul className="relative z-10 hidden md:flex items-center gap-6 lg:gap-8">
+          {NAV_LINKS.map((l) => (
+            <li key={l.href}>
+              <a href={l.href} className="text-[10.5px] tracking-[0.1em] uppercase font-medium text-white/45 hover:text-white transition-colors duration-300">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="relative z-10 flex items-center gap-3">
+          <a href="#buy" className="hidden md:inline-flex btn-primary !h-[34px] !px-4 !text-[9.5px]">
+            Comprar
           </a>
-
-          <ul className="relative z-10 hidden md:flex items-center gap-7 lg:gap-8">
-            {NAV_LINKS.map((l) => (
-              <li key={l.href}>
-                <a href={l.href} className="text-[12px] tracking-[0.08em] uppercase font-medium text-white/52 hover:text-white transition-colors duration-300 py-1">
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          <div className="relative z-10 flex items-center gap-3">
-            <a href="#buy" className="hidden md:inline-flex btn-primary !h-[42px] !px-5 !text-[11.5px]">
-              <span>Comprar</span>
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" className="opacity-60"><path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </a>
-            <button
-              aria-label="Abrir menú"
-              onClick={() => setOpen((s) => !s)}
-              className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/[0.03] text-white/80"
-            >
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                {open ? (
-                  <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                ) : (
-                  <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </nav>
-      </div>
+          <button
+            aria-label="Abrir menú"
+            onClick={() => setOpen((s) => !s)}
+            className="md:hidden flex items-center justify-center w-8 h-8 text-white/70"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              {open ? (
+                <path d="M4 4l10 10M14 4l-10 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+              ) : (
+                <path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </nav>
 
       <AnimatePresence>
         {open && (
@@ -105,25 +89,18 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden overflow-hidden mx-4 mt-2"
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden overflow-hidden bg-black/95 backdrop-blur-md border-b border-white/[0.06]"
           >
-            <div className="glass-panel rounded-[22px] px-5 py-5">
-              <ul className="flex flex-col gap-4">
-                {NAV_LINKS.map((l) => (
-                  <li key={l.href}>
-                    <a onClick={() => setOpen(false)} href={l.href} className="text-[13px] tracking-[0.12em] uppercase font-medium text-white/70 hover:text-white transition-colors">
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-                <li className="pt-2">
-                  <a onClick={() => setOpen(false)} href="#buy" className="btn-primary !h-11 !text-[12px] w-full">
-                    Comprar WH&#8209;1000XM6
+            <ul className="flex flex-col px-5 py-4 gap-3">
+              {NAV_LINKS.map((l) => (
+                <li key={l.href}>
+                  <a onClick={() => setOpen(false)} href={l.href} className="block text-[11px] tracking-[0.12em] uppercase font-medium text-white/60 hover:text-white transition-colors py-1">
+                    {l.label}
                   </a>
                 </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>

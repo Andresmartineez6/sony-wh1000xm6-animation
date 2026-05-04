@@ -49,7 +49,7 @@ export default function SilentEngineering() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(50% 40% at 50% 20%, rgba(0, 60, 200, 0.12) 0%, rgba(0,0,0,0) 65%), radial-gradient(40% 35% at 80% 80%, rgba(0, 214, 255, 0.06) 0%, rgba(0,0,0,0) 60%)',
+            'radial-gradient(50% 40% at 50% 20%, rgba(0, 60, 200, 0.12) 0%, rgba(0,0,0,0) 65%), radial-gradient(40% 35% at 80% 80%, rgba(255, 255, 255, 0.01) 0%, rgba(0,0,0,0) 60%)',
         }}
       />
       <div className="section-divider absolute top-0 inset-x-0" />
@@ -62,7 +62,7 @@ export default function SilentEngineering() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-4"
+            className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-4"
           >
             Ingeniería del silencio
           </motion.p>

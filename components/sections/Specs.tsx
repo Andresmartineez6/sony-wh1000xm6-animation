@@ -19,7 +19,7 @@ export default function Specs() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(40% 30% at 18% 20%, rgba(0, 80, 255, 0.08) 0%, rgba(0,0,0,0) 70%), radial-gradient(32% 26% at 80% 74%, rgba(0, 214, 255, 0.05) 0%, rgba(0,0,0,0) 70%)',
+            'radial-gradient(40% 30% at 18% 20%, rgba(255, 255, 255, 0.02) 0%, rgba(0,0,0,0) 70%), radial-gradient(32% 26% at 80% 74%, rgba(255, 255, 255, 0.01) 0%, rgba(0,0,0,0) 70%)',
         }}
       />
       <div className="section-divider absolute top-0 inset-x-0" />
@@ -32,7 +32,7 @@ export default function Specs() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-3"
+              className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-3"
             >
               Especificaciones
             </motion.p>

@@ -12,14 +12,14 @@ const config: Config = {
           600: '#111116',
         },
         brand: {
-          blue: '#0050FF',
-          cyan: '#00D6FF',
-          deep: '#050815',
+          blue: '#1a1a1a',
+          cyan: '#b0b0b0',
+          deep: '#050505',
         },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-        display: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['var(--font-display)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.055em',

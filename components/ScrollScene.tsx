@@ -123,19 +123,31 @@ export default function ScrollScene() {
     const dx = (w - dw) / 2;
     const dy = (h - dh) / 2 + yShift;
     ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
     ctx.drawImage(img, dx, dy, dw, dh);
 
-    // Subtle center vignette during engineering beat to mask background noise
-    if (i < engEnd) {
-      const t = 1 - i / engEnd;
-      const r = Math.min(w, h) * 0.22;
-      const grd = ctx.createRadialGradient(w * 0.5, h * 0.55, r * 0.08, w * 0.5, h * 0.55, r);
-      grd.addColorStop(0, `rgba(4,4,4,${(0.55 * t).toFixed(2)})`);
-      grd.addColorStop(0.5, `rgba(4,4,4,${(0.2 * t).toFixed(2)})`);
-      grd.addColorStop(1, 'rgba(4,4,4,0)');
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, w, h);
-    }
+    // Global edge vignette — masks grey backgrounds on ALL frames
+    const edgeGrd = ctx.createRadialGradient(w * 0.5, h * 0.5, Math.min(w, h) * 0.28, w * 0.5, h * 0.5, Math.max(w, h) * 0.72);
+    edgeGrd.addColorStop(0, 'rgba(0,0,0,0)');
+    edgeGrd.addColorStop(0.6, 'rgba(0,0,0,0.15)');
+    edgeGrd.addColorStop(0.85, 'rgba(0,0,0,0.55)');
+    edgeGrd.addColorStop(1, 'rgba(0,0,0,0.85)');
+    ctx.fillStyle = edgeGrd;
+    ctx.fillRect(0, 0, w, h);
+
+    // Top & bottom bars to hide any residual background
+    const barH = h * 0.06;
+    const topGrd = ctx.createLinearGradient(0, 0, 0, barH * 2.5);
+    topGrd.addColorStop(0, 'rgba(0,0,0,0.9)');
+    topGrd.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = topGrd;
+    ctx.fillRect(0, 0, w, barH * 2.5);
+    const btmGrd = ctx.createLinearGradient(0, h - barH * 3, 0, h);
+    btmGrd.addColorStop(0, 'rgba(0,0,0,0)');
+    btmGrd.addColorStop(1, 'rgba(0,0,0,0.7)');
+    ctx.fillStyle = btmGrd;
+    ctx.fillRect(0, h - barH * 3, w, barH * 3);
   };
 
   useMotionValueEvent(smooth, 'change', (v) => {
@@ -266,7 +278,7 @@ export default function ScrollScene() {
         </div>
 
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[min(86vw,460px)]">
-          <div className="glass-panel rounded-full px-4 py-3 md:px-5 md:py-3.5">
+          <div className="bg-black/60 backdrop-blur-md border border-white/[0.06] rounded-full px-4 py-3 md:px-5 md:py-3.5">
             <div className="progress-track h-[2px] rounded-full overflow-hidden">
               <motion.div className="progress-fill h-full" style={{ width: progressWidth }} />
             </div>
@@ -282,8 +294,8 @@ export default function ScrollScene() {
           style={{ opacity: beat1Opacity, y: beat1Y, scale: beat1Scale }}
           className="absolute inset-x-0 bottom-0 px-4 pb-24 flex items-end justify-center md:inset-y-0 md:bottom-auto md:pb-0 md:px-0 md:inset-x-auto md:left-0 md:right-auto md:items-center md:justify-start"
         >
-          <div className="glass-panel w-full max-w-[540px] rounded-[28px] px-5 py-5 sm:px-6 sm:py-6 md:ml-8 md:max-w-[500px] md:px-8 md:py-8 text-left lg:ml-12 shadow-[0_30px_90px_rgba(0,0,0,0.32)]">
-            <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-3 md:mb-4">01 &middot; Ingeniería</p>
+          <div className="bg-black/60 backdrop-blur-md border border-white/[0.06] w-full max-w-[540px] rounded-[4px] px-5 py-5 sm:px-6 sm:py-6 md:ml-8 md:max-w-[500px] md:px-8 md:py-8 text-left lg:ml-12">
+            <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-white/40 mb-3 md:mb-4">01 &middot; Ingeniería</p>
             <h2 className="text-gradient font-display font-bold tracking-tighter text-3xl md:text-[3.4rem] leading-[0.98]">
               Precisión diseñada para el silencio.
             </h2>
@@ -295,7 +307,7 @@ export default function ScrollScene() {
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {['Fibra de carbono', 'Cámara sellada', 'Titanio flexible'].map((item) => (
-                <span key={item} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white/42">
+                <span key={item} className="border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase text-white/40">
                   {item}
                 </span>
               ))}
@@ -307,8 +319,8 @@ export default function ScrollScene() {
           style={{ opacity: beat2Opacity, y: beat2Y, scale: beat2Scale }}
           className="absolute inset-x-0 bottom-0 px-4 pb-24 flex items-end justify-center md:inset-y-0 md:bottom-auto md:pb-0 md:px-0 md:inset-x-auto md:right-0 md:left-auto md:items-center md:justify-end"
         >
-          <div className="glass-panel w-full max-w-[540px] rounded-[28px] px-5 py-5 sm:px-6 sm:py-6 md:mr-8 md:max-w-[540px] md:px-8 md:py-8 text-left md:text-right lg:mr-12 shadow-[0_30px_90px_rgba(0,0,0,0.32)]">
-            <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-3 md:mb-4">02 &middot; Cancelación de Ruido</p>
+          <div className="bg-black/60 backdrop-blur-md border border-white/[0.06] w-full max-w-[540px] rounded-[4px] px-5 py-5 sm:px-6 sm:py-6 md:mr-8 md:max-w-[540px] md:px-8 md:py-8 text-left md:text-right lg:mr-12">
+            <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-white/40 mb-3 md:mb-4">02 &middot; Cancelación de Ruido</p>
             <h2 className="text-gradient font-display font-bold tracking-tighter text-3xl md:text-[3.4rem] leading-[0.98]">
               Cancelación adaptativa, redefinida.
             </h2>
@@ -318,7 +330,7 @@ export default function ScrollScene() {
               <li className="hidden md:list-item">Tu música se mantiene pura &mdash; aviones, trenes y multitudes desaparecen.</li>
             </ul>
             <div className="mt-5 flex items-center gap-4 md:justify-end">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center">
+              <div className="border border-white/10 bg-white/[0.03] px-4 py-3 text-center">
                 <p className="text-gradient font-display text-2xl font-bold tracking-tight">-30 dB</p>
                 <p className="mt-1 text-[9px] tracking-[0.22em] uppercase text-white/34">Ruido exterior</p>
               </div>
@@ -330,8 +342,8 @@ export default function ScrollScene() {
           style={{ opacity: beat3Opacity, y: beat3Y, scale: beat3Scale }}
           className="absolute inset-x-0 bottom-0 px-4 pb-24 flex items-end justify-center md:pb-28 md:justify-start md:pl-12"
         >
-          <div className="glass-panel w-full max-w-[540px] rounded-[28px] px-5 py-5 sm:px-6 sm:py-6 md:max-w-[620px] md:px-8 md:py-8 text-left shadow-[0_30px_90px_rgba(0,0,0,0.32)]">
-            <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-3 md:mb-4">03 &middot; Sonido</p>
+          <div className="bg-black/60 backdrop-blur-md border border-white/[0.06] w-full max-w-[540px] rounded-[4px] px-5 py-5 sm:px-6 sm:py-6 md:max-w-[620px] md:px-8 md:py-8 text-left">
+            <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-white/40 mb-3 md:mb-4">03 &middot; Sonido</p>
             <h2 className="text-gradient font-display font-bold tracking-tighter text-3xl md:text-[3.4rem] leading-[0.98]">
               Sonido inmersivo, real.
             </h2>
@@ -341,7 +353,7 @@ export default function ScrollScene() {
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-2.5">
               {['LDAC', 'DSEE Extreme', '360 Reality Audio'].map((item) => (
-                <span key={item} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white/42">
+                <span key={item} className="border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase text-white/40">
                   {item}
                 </span>
               ))}
@@ -354,10 +366,10 @@ export default function ScrollScene() {
           style={{ opacity: beat4Opacity, y: beat4Y, scale: beat4Scale }}
           className="absolute inset-x-0 bottom-0 px-4 pb-24 flex items-end justify-center md:inset-0 md:pb-0 md:px-0 md:items-center md:justify-center"
         >
-          <div className="glass-panel w-full max-w-[540px] rounded-[28px] px-5 py-5 sm:px-6 sm:py-6 md:max-w-[960px] md:rounded-[34px] md:px-8 md:py-8 shadow-[0_30px_100px_rgba(0,0,0,0.34)]">
+          <div className="bg-black/60 backdrop-blur-md border border-white/[0.06] w-full max-w-[540px] rounded-[4px] px-5 py-5 sm:px-6 sm:py-6 md:max-w-[960px] md:px-8 md:py-8">
             <div className="grid gap-7 md:grid-cols-[1.12fr_0.88fr] md:items-end">
               <div className="text-center md:text-left">
-                <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-brand-cyan/80 mb-3 md:mb-4">04 &middot; Experiencia</p>
+                <p className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-white/40 mb-3 md:mb-4">04 &middot; Experiencia</p>
                 <h2 className="text-gradient font-display font-bold tracking-tightest text-4xl md:text-[4.8rem] lg:text-[5.2rem] leading-[0.95]">
                   Escúchalo todo.<br />No sientas nada más.
                 </h2>
@@ -366,14 +378,14 @@ export default function ScrollScene() {
                 </p>
                 <div className="mt-6 flex flex-wrap items-center gap-2.5 md:justify-start">
                   {['Avión', 'Oficina', 'Noche', 'Concentración'].map((item) => (
-                    <span key={item} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white/42">
+                    <span key={item} className="border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase text-white/40">
                       {item}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-[28px] border border-white/[0.08] bg-black/20 px-5 py-5 text-left md:px-6 md:py-6">
+              <div className="rounded-[4px] border border-white/[0.08] bg-white/[0.03] px-5 py-5 text-left md:px-6 md:py-6">
                 <p className="text-[10px] tracking-[0.28em] uppercase text-white/42">XM6 &middot; Escucha diaria</p>
                 <p className="mt-2 text-white/82 text-[17px] md:text-[19px] leading-snug tracking-tight">
                   Diseñados para aeropuertos, oficinas y noches de foco profundo sin sacrificar comodidad.
@@ -389,12 +401,12 @@ export default function ScrollScene() {
                   </a>
                 </div>
                 <div className="mt-5 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4">
-                    <p className="text-gradient font-display text-2xl font-bold tracking-tight">-30 dB</p>
+                  <div className="border border-white/[0.08] bg-white/[0.03] px-4 py-4">
+                    <p className="text-white font-display text-2xl font-bold tracking-tight">-30 dB</p>
                     <p className="mt-1 text-[9px] tracking-[0.22em] uppercase text-white/34">Aislamiento activo</p>
                   </div>
-                  <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4">
-                    <p className="text-gradient font-display text-2xl font-bold tracking-tight">12</p>
+                  <div className="border border-white/[0.08] bg-white/[0.03] px-4 py-4">
+                    <p className="text-white font-display text-2xl font-bold tracking-tight">12</p>
                     <p className="mt-1 text-[9px] tracking-[0.22em] uppercase text-white/34">Micrófonos ANC</p>
                   </div>
                 </div>
