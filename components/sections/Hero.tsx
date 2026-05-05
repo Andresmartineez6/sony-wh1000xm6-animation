@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import TextReveal from '@/components/TextReveal';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -45,15 +46,14 @@ export default function Hero() {
           Wireless Noise Cancelling
         </motion.p>
 
-        <motion.h1
-          custom={1}
-          initial="hidden"
-          animate="show"
-          variants={fadeUp}
+        <TextReveal
+          text="WH-1000XM6"
+          tag="h1"
           className="font-display font-bold tracking-tightest leading-[0.88] text-white text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] xl:text-[7.5rem]"
-        >
-          WH-1000XM6
-        </motion.h1>
+          delay={0.4}
+          stagger={0.06}
+          once={false}
+        />
 
         <motion.p
           custom={2}

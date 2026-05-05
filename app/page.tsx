@@ -10,6 +10,7 @@ import SilentEngineering from '@/components/sections/SilentEngineering';
 import Specs from '@/components/sections/Specs';
 import Experience from '@/components/sections/Experience';
 import Crafted from '@/components/sections/Crafted';
+import ClosingCTA from '@/components/sections/ClosingCTA';
 import Footer from '@/components/sections/Footer';
 
 export default function Home() {
@@ -35,6 +36,8 @@ export default function Home() {
         <Specs />
         {/* VIII — Experiencia */}
         <Experience />
+        {/* CTA Final — Cierre cinematográfico */}
+        <ClosingCTA />
         {/* IX — Sobre el creador */}
         <Crafted />
         <Footer />

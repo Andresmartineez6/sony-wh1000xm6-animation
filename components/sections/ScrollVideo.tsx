@@ -13,6 +13,7 @@ export default function ScrollVideo() {
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [canPlay, setCanPlay] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -31,8 +32,25 @@ export default function ScrollVideo() {
 
   const chapterOpacity = useTransform(scrollYProgress, [0.05, 0.18, 0.88, 0.98], [0, 1, 1, 0]);
 
+  // Lazy-load: solo carga el video cuando el usuario está a 1 pantalla
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '100% 0px' }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   // Autoplay robust: algunos navegadores bloquean autoplay hasta interaction
   useEffect(() => {
+    if (!shouldLoad) return;
     const v = videoRef.current;
     if (!v) return;
     const tryPlay = async () => {
@@ -49,7 +67,7 @@ export default function ScrollVideo() {
     };
     document.addEventListener('visibilitychange', onVisibility);
     return () => document.removeEventListener('visibilitychange', onVisibility);
-  }, []);
+  }, [shouldLoad]);
 
   return (
     <section
@@ -66,7 +84,7 @@ export default function ScrollVideo() {
         >
           <video
             ref={videoRef}
-            src="/assets/Introducing%20the%20Sony%20WH-1000XM6%20Wireless%20Noise%20Cancelling%20Headphones.mp4"
+            src={shouldLoad ? "/assets/Introducing%20the%20Sony%20WH-1000XM6%20Wireless%20Noise%20Cancelling%20Headphones.mp4" : undefined}
             muted
             loop
             autoPlay

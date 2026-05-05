@@ -3,6 +3,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
+import TiltCard from '@/components/TiltCard';
+import TextReveal from '@/components/TextReveal';
 
 export default function Showcase() {
   const ref = useRef<HTMLDivElement>(null);
@@ -43,15 +45,13 @@ export default function Showcase() {
           >
             <span className="chapter-mark">Capítulo V · Anatomía</span>
           </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          <TextReveal
+            text="Dentro del silencio."
+            tag="h2"
             className="text-gradient font-display font-bold tracking-tighter text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.92]"
-          >
-            Dentro del silencio.
-          </motion.h2>
+            delay={0.1}
+            stagger={0.05}
+          />
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -65,9 +65,10 @@ export default function Showcase() {
         </div>
 
         {/* Hero product shot */}
+        <TiltCard className="relative mx-auto max-w-[1160px]" maxTilt={1.5} scale={1.005}>
         <motion.div
           style={{ y: heroY }}
-          className="relative mx-auto max-w-[1160px] aspect-[1344/768] rounded-[28px] overflow-hidden border border-white/[0.06] bg-ink-800 shadow-[0_48px_160px_rgba(0,0,0,0.36)]"
+          className="relative aspect-[1344/768] rounded-[28px] overflow-hidden border border-white/[0.06] bg-ink-800 shadow-[0_48px_160px_rgba(0,0,0,0.36)]"
         >
           <div aria-hidden className="absolute inset-x-[18%] top-[16%] h-[28%] rounded-full bg-brand-blue/10 blur-[90px] z-10" />
           <Image
@@ -108,6 +109,7 @@ export default function Showcase() {
             </div>
           </div>
         </motion.div>
+        </TiltCard>
 
         {/* Two-column grid: copy + exploded */}
         <div className="mt-14 md:mt-24 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-center">
