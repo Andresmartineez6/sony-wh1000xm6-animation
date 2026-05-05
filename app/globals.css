@@ -44,6 +44,17 @@ body {
   background: #000;
 }
 
+/* Performance: GPU layers for scroll-heavy sticky containers */
+section {
+  contain: layout style;
+}
+canvas {
+  will-change: contents;
+}
+.sticky {
+  will-change: transform;
+}
+
 body::before {
   content: '';
   position: fixed;

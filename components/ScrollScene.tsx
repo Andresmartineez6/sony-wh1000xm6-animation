@@ -19,17 +19,26 @@ export default function ScrollScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrameRef = useRef(0);
+  const rafPending = useRef(false);
+  const cachedGradients = useRef<{
+    edge: CanvasGradient | null;
+    top: CanvasGradient | null;
+    btm: CanvasGradient | null;
+    w: number;
+    h: number;
+  }>({ edge: null, top: null, btm: null, w: 0, h: 0 });
+  const chapterLabelRef = useRef<HTMLSpanElement>(null);
   const [loadState, setLoadState] = useState<LoadState>('idle');
   const [loadedPct, setLoadedPct] = useState(0);
-  const [chapterLabel, setChapterLabel] = useState('Ingeniería');
-  const [chapterIndex, setChapterIndex] = useState('01');
+  const chapterLabel = useRef('Ingeniería');
+  const chapterIndex = useRef('01');
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.6 });
+  const smooth = useSpring(scrollYProgress, { stiffness: 100, damping: 40, mass: 0.8 });
 
   useEffect(() => {
     let cancelled = false;
@@ -73,18 +82,35 @@ export default function ScrollScene() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const resize = () => {
-      // HiDPI for crispness on retina/4K. Source is now lossless WebP from MP4.
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const cw = window.innerWidth;
       const ch = window.innerHeight;
-      canvas.width = Math.round(cw * dpr);
-      canvas.height = Math.round(ch * dpr);
+      const w = Math.round(cw * dpr);
+      const h = Math.round(ch * dpr);
+      canvas.width = w;
+      canvas.height = h;
       canvas.style.width = cw + 'px';
       canvas.style.height = ch + 'px';
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
+      }
+      // Cache gradients once per resize — avoid creating per-frame
+      if (ctx) {
+        const edge = ctx.createRadialGradient(w * 0.5, h * 0.5, Math.min(w, h) * 0.28, w * 0.5, h * 0.5, Math.max(w, h) * 0.72);
+        edge.addColorStop(0, 'rgba(0,0,0,0)');
+        edge.addColorStop(0.6, 'rgba(0,0,0,0.15)');
+        edge.addColorStop(0.85, 'rgba(0,0,0,0.55)');
+        edge.addColorStop(1, 'rgba(0,0,0,0.85)');
+        const barH = h * 0.06;
+        const top = ctx.createLinearGradient(0, 0, 0, barH * 2.5);
+        top.addColorStop(0, 'rgba(0,0,0,0.9)');
+        top.addColorStop(1, 'rgba(0,0,0,0)');
+        const btm = ctx.createLinearGradient(0, h - barH * 3, 0, h);
+        btm.addColorStop(0, 'rgba(0,0,0,0)');
+        btm.addColorStop(1, 'rgba(0,0,0,0.7)');
+        cachedGradients.current = { edge, top, btm, w, h };
       }
       drawFrame(currentFrameRef.current);
     };
@@ -101,11 +127,8 @@ export default function ScrollScene() {
     const img = imagesRef.current[i];
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-
-    const w = canvas.width;
-    const h = canvas.height;
+    const { edge, top, btm, w, h } = cachedGradients.current;
+    if (!w || !h) return;
 
     const engEnd = FRAME_COUNT * 0.28;
     const ancEnd = FRAME_COUNT * 0.55;
@@ -122,32 +145,15 @@ export default function ScrollScene() {
     const dh = img.naturalHeight * scale;
     const dx = (w - dw) / 2;
     const dy = (h - dh) / 2 + yShift;
-    ctx.clearRect(0, 0, w, h);
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, w, h);
     ctx.drawImage(img, dx, dy, dw, dh);
 
-    // Global edge vignette — masks grey backgrounds on ALL frames
-    const edgeGrd = ctx.createRadialGradient(w * 0.5, h * 0.5, Math.min(w, h) * 0.28, w * 0.5, h * 0.5, Math.max(w, h) * 0.72);
-    edgeGrd.addColorStop(0, 'rgba(0,0,0,0)');
-    edgeGrd.addColorStop(0.6, 'rgba(0,0,0,0.15)');
-    edgeGrd.addColorStop(0.85, 'rgba(0,0,0,0.55)');
-    edgeGrd.addColorStop(1, 'rgba(0,0,0,0.85)');
-    ctx.fillStyle = edgeGrd;
-    ctx.fillRect(0, 0, w, h);
-
-    // Top & bottom bars to hide any residual background
+    // Cached gradients — no per-frame allocation
+    if (edge) { ctx.fillStyle = edge; ctx.fillRect(0, 0, w, h); }
     const barH = h * 0.06;
-    const topGrd = ctx.createLinearGradient(0, 0, 0, barH * 2.5);
-    topGrd.addColorStop(0, 'rgba(0,0,0,0.9)');
-    topGrd.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = topGrd;
-    ctx.fillRect(0, 0, w, barH * 2.5);
-    const btmGrd = ctx.createLinearGradient(0, h - barH * 3, 0, h);
-    btmGrd.addColorStop(0, 'rgba(0,0,0,0)');
-    btmGrd.addColorStop(1, 'rgba(0,0,0,0.7)');
-    ctx.fillStyle = btmGrd;
-    ctx.fillRect(0, h - barH * 3, w, barH * 3);
+    if (top) { ctx.fillStyle = top; ctx.fillRect(0, 0, w, barH * 2.5); }
+    if (btm) { ctx.fillStyle = btm; ctx.fillRect(0, h - barH * 3, w, barH * 3); }
   };
 
   useMotionValueEvent(smooth, 'change', (v) => {
@@ -157,13 +163,26 @@ export default function ScrollScene() {
     );
     if (frame !== currentFrameRef.current) {
       currentFrameRef.current = frame;
-      drawFrame(frame);
+      // RAF gate: only one draw per animation frame
+      if (!rafPending.current) {
+        rafPending.current = true;
+        requestAnimationFrame(() => {
+          rafPending.current = false;
+          drawFrame(currentFrameRef.current);
+        });
+      }
     }
+    // Direct DOM mutation — no React re-render during scroll
     const label =
       v < 0.28 ? 'Ingeniería' : v < 0.55 ? 'Cancelación de Ruido' : v < 0.8 ? 'Sonido' : 'Experiencia';
     const index = v < 0.28 ? '01' : v < 0.55 ? '02' : v < 0.8 ? '03' : '04';
-    setChapterLabel((prev) => (prev === label ? prev : label));
-    setChapterIndex((prev) => (prev === index ? prev : index));
+    if (label !== chapterLabel.current || index !== chapterIndex.current) {
+      chapterLabel.current = label;
+      chapterIndex.current = index;
+      if (chapterLabelRef.current) {
+        chapterLabelRef.current.textContent = `${index} \u00b7 ${label}`;
+      }
+    }
   });
 
   const beat1Opacity = useTransform(smooth, [0.0, 0.05, 0.22, 0.28], [0, 1, 1, 0]);
@@ -208,8 +227,8 @@ export default function ScrollScene() {
             <p className="text-[10px] tracking-[0.28em] uppercase text-white/38">Capítulo actual</p>
             <div className="mt-2 flex items-end justify-between gap-4">
               <div>
-                <p className="text-gradient font-display text-2xl font-bold tracking-tight">{chapterIndex}</p>
-                <p className="text-[12px] text-white/66 tracking-tight">{chapterLabel}</p>
+                <p className="text-gradient font-display text-2xl font-bold tracking-tight">{chapterIndex.current}</p>
+                <p className="text-[12px] text-white/66 tracking-tight">{chapterLabel.current}</p>
               </div>
               <div className="text-right">
                 <p className="text-[10px] tracking-[0.24em] uppercase text-white/34">Secuencia</p>
@@ -262,17 +281,9 @@ export default function ScrollScene() {
         <div className="absolute top-20 left-0 right-0 flex justify-center pointer-events-none">
           <div className="flex items-center gap-3 text-[10.5px] tracking-[0.3em] uppercase text-white/45">
             <span className="h-[1px] w-6 bg-white/20" />
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={chapterLabel}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.35 }}
-              >
-                {chapterIndex} &middot; {chapterLabel}
-              </motion.span>
-            </AnimatePresence>
+            <span ref={chapterLabelRef} className="transition-opacity duration-300">
+              01 · Ingeniería
+            </span>
             <span className="h-[1px] w-6 bg-white/20" />
           </div>
         </div>
