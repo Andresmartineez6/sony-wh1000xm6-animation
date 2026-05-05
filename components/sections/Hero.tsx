@@ -25,7 +25,7 @@ export default function Hero() {
           muted
           loop
           playsInline
-          poster="/assets/sony-product-hero.png"
+          poster="/assets/sony-product-hero.webp"
           className="absolute inset-0 h-full w-full object-cover"
         >
           <source src="/_Smoothly_transition_from_sony.mp4" type="video/mp4" />

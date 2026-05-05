@@ -90,7 +90,7 @@ export default function ScrollVideo() {
             autoPlay
             playsInline
             preload="auto"
-            poster="/assets/cascos wh1000 mejora visual.png"
+            poster="/assets/cascos wh1000 mejora visual.webp"
             className="absolute inset-0 h-full w-full object-cover"
             {...({ 'webkit-playsinline': 'true' } as Record<string, string>)}
           />

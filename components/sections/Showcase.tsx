@@ -72,7 +72,7 @@ export default function Showcase() {
         >
           <div aria-hidden className="absolute inset-x-[18%] top-[16%] h-[28%] rounded-full bg-brand-blue/10 blur-[90px] z-10" />
           <Image
-            src="/assets/cascos wh1000 mejora visual.png"
+            src="/assets/cascos wh1000 mejora visual.webp"
             alt="Sony WH-1000XM6 product shot"
             fill
             sizes="(max-width: 1100px) 100vw, 1100px"
@@ -163,7 +163,7 @@ export default function Showcase() {
             className="lg:col-span-7 relative aspect-square rounded-[28px] overflow-hidden border border-white/[0.06] bg-ink-800 shadow-[0_48px_160px_rgba(0,0,0,0.32)]"
           >
             <Image
-              src="/assets/sony-exploded.png"
+              src="/assets/sony-exploded.webp"
               alt="Sony WH-1000XM6 exploded technical view"
               fill
               sizes="(max-width: 1024px) 100vw, 700px"

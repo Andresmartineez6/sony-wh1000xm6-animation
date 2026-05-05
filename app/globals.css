@@ -55,14 +55,7 @@ canvas {
   will-change: transform;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.02) 0%, transparent 60%);
-  z-index: 1;
-}
+/* Removed subtle body::before gradient — pure black */
 
 body::after {
   content: '';

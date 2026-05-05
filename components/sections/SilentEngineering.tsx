@@ -34,10 +34,10 @@ const fadeUp = {
 };
 
 const MACRO_SLOTS = [
-  { label: 'Almohadilla', sub: 'Espuma adaptativa', imageSrc: '/assets/almoadilla wh 10000.png', imageClass: 'object-cover object-center scale-[1.06]' },
-  { label: 'Articulación', sub: 'Titanio con acabado pulido', imageSrc: '/assets/enganche cascos wh 1000.png', imageClass: 'object-cover object-center scale-[1.04]' },
+  { label: 'Almohadilla', sub: 'Espuma adaptativa', imageSrc: '/assets/almoadilla wh 10000.webp', imageClass: 'object-cover object-center scale-[1.06]' },
+  { label: 'Articulación', sub: 'Titanio con acabado pulido', imageSrc: '/assets/enganche cascos wh 1000.webp', imageClass: 'object-cover object-center scale-[1.04]' },
   { label: 'Silueta', sub: 'Diadema y copa en equilibrio', imageSrc: '/assets/sony-product.jpg', imageClass: 'object-cover object-center scale-[1.08]' },
-  { label: 'Puerto', sub: 'USB-C · Carga rápida', imageSrc: '/assets/cascos wh 1000 conector usb 3.0.png', imageClass: 'object-cover object-center scale-[1.05]' },
+  { label: 'Puerto', sub: 'USB-C · Carga rápida', imageSrc: '/assets/cascos wh 1000 conector usb 3.0.webp', imageClass: 'object-cover object-center scale-[1.05]' },
 ];
 
 export default function SilentEngineering() {

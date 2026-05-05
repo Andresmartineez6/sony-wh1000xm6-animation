@@ -165,7 +165,7 @@ export default function Experience() {
             <div className="grid gap-5 md:grid-cols-[1.05fr_0.95fr] md:items-stretch">
               <div className="relative min-h-[260px] sm:min-h-[320px] overflow-hidden border border-white/[0.06] bg-ink-900">
                 <Image
-                  src="/assets/cascos wh1000 mejora visual.png"
+                  src="/assets/cascos wh1000 mejora visual.webp"
                   alt="Sony WH-1000XM6"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

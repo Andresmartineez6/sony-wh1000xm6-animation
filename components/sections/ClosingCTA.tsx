@@ -41,7 +41,7 @@ export default function ClosingCTA() {
           className="relative mx-auto w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] md:w-[400px] md:h-[400px] mb-12 md:mb-16"
         >
           <Image
-            src="/assets/cascos wh 1000 mejora visual sin fondo.png"
+            src="/assets/cascos wh 1000 mejora visual sin fondo.webp"
             alt="Sony WH-1000XM6"
             fill
             sizes="400px"

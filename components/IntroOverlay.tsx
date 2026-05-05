@@ -35,9 +35,9 @@ export default function IntroOverlay() {
             <Image
               src="/assets/sony-logo-white.png"
               alt="Sony"
-              width={180}
-              height={30}
-              className="h-7 sm:h-8 md:h-9 w-auto opacity-90"
+              width={480}
+              height={80}
+              className="h-14 sm:h-16 md:h-20 w-auto"
               priority
             />
           </motion.div>
